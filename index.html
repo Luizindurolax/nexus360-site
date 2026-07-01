@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus360 — Dashboard de Vendas, Estoque e Produtos</title>
+<meta name="description" content="Nexus360: dashboard inteligente de vendas, estoque e produtos, integrado ao Bling e sincronizado em tempo real. Instale como app no celular.">
+<style>
+:root{
+  --blue:#1a56db;--blue2:#0a2e7a;--blue-l:#e8f0fe;
+  --green:#059669;--orange:#d97706;--purple:#7c3aed;--red:#dc2626;
+  --bg:#f5f7fa;--card:#ffffff;--text:#0f172a;--t2:#64748b;--bdr:#e5e7eb;
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+section{position:relative}
+
+/* ---------- NAV ---------- */
+header{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--bdr)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:9px;font-weight:800;font-size:19px;letter-spacing:-.5px}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#3b76f6,var(--blue) 60%,var(--blue2));box-shadow:0 6px 14px rgba(26,86,219,.4), inset 0 1px 1px rgba(255,255,255,.5), inset 0 -2px 3px rgba(0,0,0,.25);position:relative}
+.logo-mark::after{content:"";position:absolute;inset:6px;border-radius:5px;border:2px solid rgba(255,255,255,.75);border-right-color:transparent;border-bottom-color:transparent;transform:rotate(35deg)}
+.nav-links{display:flex;gap:30px;font-size:14.5px;font-weight:600;color:var(--t2)}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:11px;font-weight:700;font-size:14.5px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn-primary{background:linear-gradient(145deg,#2f6cf5,var(--blue));color:#fff;box-shadow:0 8px 20px rgba(26,86,219,.35), inset 0 1px 1px rgba(255,255,255,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(26,86,219,.45)}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--bdr)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+.btn-lg{padding:15px 26px;font-size:16px;border-radius:13px}
+.menu-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer}
+
+/* ---------- HERO ---------- */
+.hero{padding:84px 24px 60px;overflow:hidden;position:relative}
+.hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);opacity:.55;animation:float 9s ease-in-out infinite}
+.blob1{width:260px;height:260px;top:-60px;left:-80px;background:radial-gradient(circle at 30% 30%,#7c9bff,var(--blue) 70%);animation-delay:0s}
+.blob2{width:180px;height:180px;top:120px;right:-40px;background:radial-gradient(circle at 30% 30%,#a78bfa,var(--purple) 70%);animation-delay:2s}
+.blob3{width:140px;height:140px;bottom:0;left:38%;background:radial-gradient(circle at 30% 30%,#6ee7b7,var(--green) 70%);animation-delay:4s}
+.blob4{width:110px;height:110px;top:40%;left:6%;background:radial-gradient(circle at 30% 30%,#fcd34d,var(--orange) 70%);animation-delay:1s}
+@keyframes float{0%,100%{transform:translateY(0) translateX(0) rotate(0deg)}33%{transform:translateY(-24px) translateX(14px) rotate(8deg)}66%{transform:translateY(14px) translateX(-10px) rotate(-6deg)}}
+
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center;max-width:1180px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--blue-l);color:var(--blue);font-weight:700;font-size:12.5px;padding:7px 14px;border-radius:100px;margin-bottom:20px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(5,150,105,.18)}
+.hero h1{font-size:clamp(32px,4.4vw,52px);font-weight:800;letter-spacing:-1.4px;line-height:1.08;margin-bottom:20px}
+.hero h1 span{background:linear-gradient(100deg,var(--blue),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:17.5px;color:var(--t2);max-width:490px;margin-bottom:30px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+.hero-note{font-size:13px;color:var(--t2);display:flex;align-items:center;gap:8px}
+.badges-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.mini-badge{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--bdr);border-radius:100px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--t2);box-shadow:0 2px 6px rgba(15,23,42,.04)}
+.mini-badge svg{width:14px;height:14px;flex-shrink:0}
+
+/* 3D phone */
+.phone-stage{perspective:1400px;display:flex;justify-content:center;position:relative}
+.phone{width:280px;height:572px;background:#0b1220;border-radius:42px;padding:12px;box-shadow:0 40px 80px -20px rgba(10,20,60,.45),0 10px 30px rgba(10,20,60,.25);transform:rotateY(-16deg) rotateX(6deg) rotateZ(1deg);transform-style:preserve-3d;transition:transform .15s ease-out;position:relative}
+.phone::before{content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);width:110px;height:20px;background:#0b1220;border-radius:0 0 14px 14px;z-index:3}
+.phone-screen{width:100%;height:100%;background:var(--bg);border-radius:32px;overflow:hidden;position:relative}
+.ph-topbar{background:linear-gradient(160deg,var(--blue) 0%,var(--blue2) 100%);padding:26px 16px 20px;color:#fff}
+.ph-topbar .ttl{font-size:11px;opacity:.75;font-weight:600;letter-spacing:.4px}
+.ph-topbar .val{font-size:22px;font-weight:800;margin-top:2px}
+.ph-kpis{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:12px}
+.ph-kpi{background:#fff;border-radius:12px;padding:10px 11px;box-shadow:0 4px 10px rgba(15,23,42,.06)}
+.ph-kpi .l{font-size:9.5px;color:var(--t2);font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.ph-kpi .v{font-size:15px;font-weight:800;margin-top:3px}
+.ph-kpi .bar{height:3px;border-radius:2px;margin-top:7px}
+.ph-chart{margin:2px 12px 10px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 4px 10px rgba(15,23,42,.06)}
+.ph-chart .l{font-size:10px;font-weight:700;color:var(--t2);margin-bottom:8px}
+.ph-bars{display:flex;align-items:flex-end;gap:6px;height:56px}
+.ph-bars i{flex:1;background:linear-gradient(180deg,#3b76f6,var(--blue));border-radius:4px 4px 0 0}
+.ph-list{margin:0 12px;background:#fff;border-radius:12px;padding:10px 12px;box-shadow:0 4px 10px rgba(15,23,42,.06)}
+.ph-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #f1f5f9;font-size:11px}
+.ph-row:last-child{border:none}
+.ph-row .nm{font-weight:700}
+.ph-row .sub{font-size:9.5px;color:var(--t2)}
+.ph-row .tag{font-size:9px;font-weight:800;padding:3px 7px;border-radius:100px}
+.tag-ok{background:#dcfce7;color:#166534}
+.tag-warn{background:#fef3c7;color:#92400e}
+.ph-nav{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eef1f5;display:flex;justify-content:space-around;padding:9px 4px 12px}
+.ph-nav .it{width:20px;height:20px;border-radius:6px;background:#e2e8f0}
+.ph-nav .it.on{background:var(--blue)}
+.float-chip{position:absolute;background:#fff;border-radius:13px;padding:10px 13px;box-shadow:0 14px 30px rgba(15,23,42,.16);display:flex;align-items:center;gap:9px;font-size:12px;font-weight:700;animation:chipfloat 4.5s ease-in-out infinite}
+.float-chip .ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0}
+.chip1{top:14%;left:-8%;animation-delay:0s}
+.chip2{bottom:18%;right:-10%;animation-delay:1.5s}
+@keyframes chipfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ---------- SECTION HEAD ---------- */
+.sec-head{text-align:center;max-width:640px;margin:0 auto 46px}
+.sec-tag{color:var(--blue);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
+.sec-head h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.sec-head p{color:var(--t2);font-size:16px}
+
+/* ---------- FEATURES (3D patch cards) ---------- */
+.features{padding:90px 24px}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1180px;margin:0 auto}
+.feat-card{background:var(--card);border-radius:20px;padding:26px 22px;border:1px solid var(--bdr);transform-style:preserve-3d;transition:transform .1s ease-out,box-shadow .2s;box-shadow:0 2px 8px rgba(15,23,42,.04)}
+.feat-card:hover{box-shadow:0 26px 44px -18px rgba(15,23,42,.22)}
+.patch{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;position:relative;transform:translateZ(20px)}
+.patch svg{width:24px;height:24px;color:#fff;position:relative;z-index:2}
+.patch::before{content:"";position:absolute;inset:0;border-radius:16px}
+.patch::after{content:"";position:absolute;inset:0;border-radius:16px;box-shadow:inset 0 2px 2px rgba(255,255,255,.55),inset 0 -3px 5px rgba(0,0,0,.22)}
+.p-blue::before{background:linear-gradient(150deg,#4d84ff,var(--blue) 65%,var(--blue2));box-shadow:0 10px 18px -6px rgba(26,86,219,.55)}
+.p-green::before{background:linear-gradient(150deg,#34d399,var(--green) 65%,#046c50);box-shadow:0 10px 18px -6px rgba(5,150,105,.5)}
+.p-orange::before{background:linear-gradient(150deg,#fbbf24,var(--orange) 65%,#92400e);box-shadow:0 10px 18px -6px rgba(217,119,6,.5)}
+.p-purple::before{background:linear-gradient(150deg,#a78bfa,var(--purple) 65%,#4c1d95);box-shadow:0 10px 18px -6px rgba(124,58,237,.5)}
+.p-red::before{background:linear-gradient(150deg,#f87171,var(--red) 65%,#7f1d1d);box-shadow:0 10px 18px -6px rgba(220,38,38,.5)}
+.feat-card h3{font-size:16.5px;font-weight:700;margin-bottom:7px;transform:translateZ(10px)}
+.feat-card p{font-size:13.8px;color:var(--t2);transform:translateZ(10px)}
+
+/* ---------- SHOWCASE ---------- */
+.showcase{padding:30px 24px 100px;background:linear-gradient(180deg,#fff,var(--bg))}
+.show-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1050px;margin:0 auto}
+.show-phone{transform:rotateY(0) rotateX(0);transform-style:preserve-3d;transition:transform .15s ease-out}
+.show-phone .phone{width:220px;height:452px;transform:none;margin:0 auto}
+.show-lbl{text-align:center;margin-top:16px;font-weight:700;font-size:14.5px}
+.show-lbl span{display:block;font-weight:500;font-size:12.5px;color:var(--t2);margin-top:2px}
+
+/* ---------- HOW IT WORKS ---------- */
+.how{padding:20px 24px 100px}
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1050px;margin:0 auto;position:relative}
+.how-grid::before{content:"";position:absolute;top:34px;left:14%;right:14%;height:2px;background:repeating-linear-gradient(90deg,var(--bdr) 0 8px,transparent 8px 16px);z-index:0}
+.how-card{position:relative;z-index:1;text-align:center}
+.how-num{width:68px;height:68px;border-radius:20px;background:linear-gradient(150deg,#fff,#eef2ff);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:var(--blue);margin:0 auto 18px;box-shadow:0 14px 26px -12px rgba(26,86,219,.3),inset 0 1px 1px rgba(255,255,255,.8)}
+.how-card h3{font-size:16.5px;font-weight:700;margin-bottom:8px}
+.how-card p{font-size:13.8px;color:var(--t2);max-width:260px;margin:0 auto}
+
+/* ---------- PRICING ---------- */
+.pricing{padding:20px 24px 100px}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:1050px;margin:0 auto;align-items:start}
+.price-card{background:var(--card);border:1.5px solid var(--bdr);border-radius:22px;padding:30px 26px;transform-style:preserve-3d;transition:transform .1s ease-out,box-shadow .2s;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.price-card:hover{box-shadow:0 30px 50px -20px rgba(15,23,42,.25)}
+.price-card.pop{border-color:var(--blue);position:relative;background:linear-gradient(180deg,#fff,var(--blue-l) 250%)}
+.pop-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(145deg,#2f6cf5,var(--blue));color:#fff;font-size:11.5px;font-weight:800;padding:6px 16px;border-radius:100px;box-shadow:0 8px 16px rgba(26,86,219,.35)}
+.plan-name{font-weight:700;font-size:16px;margin-bottom:4px}
+.plan-desc{font-size:13px;color:var(--t2);margin-bottom:18px}
+.plan-price{font-size:34px;font-weight:800;letter-spacing:-1px}
+.plan-price span{font-size:14px;font-weight:600;color:var(--t2)}
+.plan-list{margin:22px 0 26px;display:flex;flex-direction:column;gap:11px}
+.plan-list li{list-style:none;display:flex;gap:9px;align-items:flex-start;font-size:13.8px;color:var(--text)}
+.plan-list svg{width:17px;height:17px;color:var(--green);flex-shrink:0;margin-top:1px}
+.price-note{text-align:center;font-size:13px;color:var(--t2);margin-top:30px}
+
+/* ---------- FAQ ---------- */
+.faq{padding:20px 24px 100px}
+.faq-list{max-width:740px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--card);border:1px solid var(--bdr);border-radius:16px;overflow:hidden}
+.faq-q{width:100%;text-align:left;padding:18px 22px;background:none;border:none;font-size:15px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--text)}
+.faq-q .chev{transition:transform .2s;color:var(--t2);flex-shrink:0}
+.faq-item.open .faq-q .chev{transform:rotate(180deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-a p{padding:0 22px 18px;font-size:13.8px;color:var(--t2)}
+
+/* ---------- FINAL CTA ---------- */
+.cta-final{margin:0 24px 90px;border-radius:28px;padding:64px 40px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(150deg,var(--blue) 0%,var(--blue2) 100%);box-shadow:0 40px 70px -30px rgba(26,86,219,.5)}
+.cta-final::before,.cta-final::after{content:"";position:absolute;border-radius:50%;filter:blur(6px);opacity:.35}
+.cta-final::before{width:220px;height:220px;background:#fff;top:-90px;right:-60px}
+.cta-final::after{width:160px;height:160px;background:var(--green);bottom:-70px;left:8%}
+.cta-final h2{position:relative;color:#fff;font-size:clamp(24px,3.2vw,34px);font-weight:800;letter-spacing:-.8px;margin-bottom:14px}
+.cta-final p{position:relative;color:rgba(255,255,255,.8);max-width:480px;margin:0 auto 30px;font-size:15.5px}
+.cta-final .btn-primary{background:#fff;color:var(--blue);box-shadow:0 14px 28px rgba(0,0,0,.2)}
+.cta-final .actions{position:relative;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-outline-w{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.45)}
+.btn-outline-w:hover{border-color:#fff}
+
+/* ---------- FOOTER ---------- */
+footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
+.foot-grid{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;padding-bottom:30px}
+.foot-brand p{color:var(--t2);font-size:13.5px;max-width:260px;margin-top:10px}
+.foot-cols{display:flex;gap:60px;flex-wrap:wrap}
+.foot-col h4{font-size:13px;font-weight:700;margin-bottom:14px;color:var(--text)}
+.foot-col a{display:block;font-size:13.5px;color:var(--t2);margin-bottom:10px}
+.foot-col a:hover{color:var(--blue)}
+.foot-bottom{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-top:22px;border-top:1px solid var(--bdr);font-size:12.5px;color:var(--t2)}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:960px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+  .hero-grid{grid-template-columns:1fr;text-align:center}
+  .hero p.lead{margin:0 auto 30px}
+  .hero-actions,.badges-row{justify-content:center}
+  .phone-stage{margin-top:20px}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .show-grid{grid-template-columns:1fr;max-width:280px}
+  .how-grid{grid-template-columns:1fr;gap:36px}
+  .how-grid::before{display:none}
+  .price-grid{grid-template-columns:1fr;max-width:380px}
+}
+@media(max-width:520px){
+  .feat-grid{grid-template-columns:1fr}
+  .float-chip{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="logo-mark"></span>Nexus360</div>
+    <div class="nav-links">
+      <a href="#recursos">Recursos</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#planos">Planos</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#planos" class="btn btn-ghost">Ver planos</a>
+      <a href="#cta" class="btn btn-primary">Começar agora</a>
+    </div>
+    <button class="menu-btn" aria-label="menu">☰</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+    <div class="blob blob4"></div>
+  </div>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Sincronizado com o Bling em tempo real</div>
+      <h1>Sua operação de vendas, estoque e produtos em <span>um só painel</span>.</h1>
+      <p class="lead">O Nexus360 conecta ao seu ERP, organiza os dados no Supabase e entrega um dashboard rápido, instalável no celular como app — pronto para tomar decisão em segundos, não em planilhas.</p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary btn-lg">Solicitar demonstração</a>
+        <a href="#recursos" class="btn btn-ghost btn-lg">Ver recursos ↓</a>
+      </div>
+      <div class="badges-row">
+        <div class="mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Instalável como PWA</div>
+        <div class="mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Atualização automática diária</div>
+        <div class="mini-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Dados protegidos (RLS)</div>
+      </div>
+    </div>
+    <div class="phone-stage" id="phoneStage">
+      <div class="phone" id="heroPhone">
+        <div class="phone-screen">
+          <div class="ph-topbar">
+            <div class="ttl">RECEITA TOTAL · HOJE</div>
+            <div class="val">R$ 84.320</div>
+          </div>
+          <div class="ph-kpis">
+            <div class="ph-kpi"><div class="l">Pedidos</div><div class="v">312</div><div class="bar" style="background:var(--blue)"></div></div>
+            <div class="ph-kpi"><div class="l">Ticket Médio</div><div class="v">R$270</div><div class="bar" style="background:var(--purple)"></div></div>
+            <div class="ph-kpi"><div class="l">Estoque Crítico</div><div class="v">14</div><div class="bar" style="background:var(--orange)"></div></div>
+            <div class="ph-kpi"><div class="l">Vendedores</div><div class="v">9</div><div class="bar" style="background:var(--green)"></div></div>
+          </div>
+          <div class="ph-chart">
+            <div class="l">Vendas · últimos 7 dias</div>
+            <div class="ph-bars">
+              <i style="height:40%"></i><i style="height:65%"></i><i style="height:50%"></i>
+              <i style="height:80%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:70%"></i>
+            </div>
+          </div>
+          <div class="ph-list">
+            <div class="ph-row"><div><div class="nm">Kit Organizador</div><div class="sub">SKU 4021</div></div><span class="tag tag-ok">Saudável</span></div>
+            <div class="ph-row"><div><div class="nm">Luminária LED</div><div class="sub">SKU 1187</div></div><span class="tag tag-warn">Crítico</span></div>
+            <div class="ph-row"><div><div class="nm">Mochila Urbana</div><div class="sub">SKU 3390</div></div><span class="tag tag-ok">Saudável</span></div>
+          </div>
+          <div class="ph-nav">
+            <div class="it on"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div>
+          </div>
+        </div>
+      </div>
+      <div class="float-chip chip1"><div class="ic" style="background:linear-gradient(150deg,#34d399,var(--green))">✓</div>Sync com Bling ativo</div>
+      <div class="float-chip chip2"><div class="ic" style="background:linear-gradient(150deg,#4d84ff,var(--blue))">%</div>+18% vs. semana anterior</div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="recursos">
+  <div class="sec-head">
+    <div class="sec-tag">Recursos</div>
+    <h2>Tudo que sua operação precisa acompanhar</h2>
+    <p>Um único app substituindo planilhas soltas, relatórios manuais e horas perdidas conferindo estoque.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card tilt">
+      <div class="patch p-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg></div>
+      <h3>Dashboard em tempo real</h3>
+      <p>KPIs de receita, pedidos, ticket médio e mais, atualizados automaticamente todos os dias.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+      <h3>Integração com Bling</h3>
+      <p>Conecta direto ao seu ERP e sincroniza pedidos, compras, lojas e produtos sem retrabalho.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></div>
+      <h3>Controle de estoque</h3>
+      <p>Alertas automáticos de ruptura, estoque crítico e sugestão de compra por produto.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <h3>Gestão de vendas</h3>
+      <p>Acompanhe vendas por canal, produto e período com busca e filtros instantâneos.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a7 7 0 0 1 14 0v1"/><circle cx="19" cy="7" r="2.5"/></svg></div>
+      <h3>Ranking de vendedores</h3>
+      <p>Compare desempenho por vendedor: receita, número de pedidos e ticket médio.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></div>
+      <h3>Performance de compras</h3>
+      <p>Visão consolidada de custo real, valor de compra e cobertura de estoque por SKU.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2.5"/><path d="M9 18h6"/></svg></div>
+      <h3>App instalável (PWA)</h3>
+      <p>Instala na tela inicial do celular, funciona como app nativo, com login e PIN de acesso.</p>
+    </div>
+    <div class="feat-card tilt">
+      <div class="patch p-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3>Dados protegidos</h3>
+      <p>Armazenamento em Supabase com políticas de segurança (RLS) e tokens de acesso próprios.</p>
+    </div>
+  </div>
+</section>
+
+<section class="showcase" id="produto">
+  <div class="sec-head">
+    <div class="sec-tag">O app por dentro</div>
+    <h2>Feito para uso rápido, no dia a dia</h2>
+    <p>Telas pensadas para decisões rápidas: números primeiro, detalhes a um toque de distância.</p>
+  </div>
+  <div class="show-grid">
+    <div>
+      <div class="show-phone tilt-soft">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="ph-topbar"><div class="ttl">DASHBOARD</div><div class="val">Visão geral</div></div>
+            <div class="ph-kpis">
+              <div class="ph-kpi"><div class="l">Receita</div><div class="v">R$84k</div><div class="bar" style="background:var(--blue)"></div></div>
+              <div class="ph-kpi"><div class="l">Pedidos</div><div class="v">312</div><div class="bar" style="background:var(--green)"></div></div>
+            </div>
+            <div class="ph-chart"><div class="l">Top produtos</div><div class="ph-bars"><i style="height:90%"></i><i style="height:60%"></i><i style="height:75%"></i><i style="height:45%"></i></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="show-lbl">Dashboard<span>KPIs e gráficos consolidados</span></div>
+    </div>
+    <div>
+      <div class="show-phone tilt-soft">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="ph-topbar"><div class="ttl">PRODUTOS</div><div class="val">1.234 itens</div></div>
+            <div class="ph-list" style="margin:14px 12px">
+              <div class="ph-row"><div><div class="nm">Kit Organizador</div><div class="sub">Estoque: 84</div></div><span class="tag tag-ok">Saudável</span></div>
+              <div class="ph-row"><div><div class="nm">Luminária LED</div><div class="sub">Estoque: 3</div></div><span class="tag tag-warn">Crítico</span></div>
+              <div class="ph-row"><div><div class="nm">Cadeira Gamer</div><div class="sub">Estoque: 0</div></div><span class="tag" style="background:#fee2e2;color:#991b1b">Ruptura</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="show-lbl">Produtos<span>Status de estoque por SKU</span></div>
+    </div>
+    <div>
+      <div class="show-phone tilt-soft">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="ph-topbar"><div class="ttl">VENDAS</div><div class="val">Por canal</div></div>
+            <div class="ph-list" style="margin:14px 12px">
+              <div class="ph-row"><div><div class="nm">Loja Online</div><div class="sub">158 pedidos</div></div><span class="tag tag-ok">R$41k</span></div>
+              <div class="ph-row"><div><div class="nm">Marketplace</div><div class="sub">96 pedidos</div></div><span class="tag tag-ok">R$27k</span></div>
+              <div class="ph-row"><div><div class="nm">Loja Física</div><div class="sub">58 pedidos</div></div><span class="tag tag-warn">R$16k</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="show-lbl">Vendas<span>Filtros por cliente e canal</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como-funciona">
+  <div class="sec-head">
+    <div class="sec-tag">Como funciona</div>
+    <h2>Do ERP ao seu bolso em 3 passos</h2>
+  </div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">1</div>
+      <h3>Conecte ao Bling</h3>
+      <p>Autorize o acesso e o Nexus360 passa a ler pedidos, compras, produtos e lojas automaticamente.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">2</div>
+      <h3>Sincronize os dados</h3>
+      <p>As informações são organizadas no Supabase, com atualização diária agendada e sync manual quando quiser.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-num">3</div>
+      <h3>Acesse pelo celular</h3>
+      <p>Instale o app na tela inicial e acompanhe tudo com login e PIN, onde estiver.</p>
+    </div>
+  </div>
+</section>
+
+<section class="pricing" id="planos">
+  <div class="sec-head">
+    <div class="sec-tag">Planos</div>
+    <h2>Escolha o plano do seu negócio</h2>
+    <p>Preços de exemplo — ajuste conforme sua estratégia comercial.</p>
+  </div>
+  <div class="price-grid">
+    <div class="price-card tilt">
+      <div class="plan-name">Starter</div>
+      <div class="plan-desc">Para operações começando a organizar os dados.</div>
+      <div class="plan-price">R$ 149<span>/mês</span></div>
+      <ul class="plan-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>1 loja conectada</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Dashboard e produtos</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Sincronização diária</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>1 usuário</li>
+      </ul>
+      <a href="#cta" class="btn btn-ghost" style="width:100%">Começar</a>
+    </div>
+    <div class="price-card pop tilt">
+      <div class="pop-tag">Mais popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-desc">Para times que vivem de dados de vendas e estoque.</div>
+      <div class="plan-price">R$ 349<span>/mês</span></div>
+      <ul class="plan-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Até 5 lojas conectadas</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Vendedores e compras</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Alertas de estoque crítico</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Até 10 usuários</li>
+      </ul>
+      <a href="#cta" class="btn btn-primary" style="width:100%">Começar</a>
+    </div>
+    <div class="price-card tilt">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-desc">Para operações com múltiplas lojas e alto volume.</div>
+      <div class="plan-price">Sob consulta</div>
+      <ul class="plan-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Lojas ilimitadas</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Usuários ilimitados</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Suporte prioritário</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Integrações customizadas</li>
+      </ul>
+      <a href="#cta" class="btn btn-ghost" style="width:100%">Falar com vendas</a>
+    </div>
+  </div>
+  <div class="price-note">Todos os planos incluem PWA instalável, login com PIN e dados protegidos com RLS.</div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="sec-head">
+    <div class="sec-tag">Dúvidas</div>
+    <h2>Perguntas frequentes</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q">Preciso instalar algo no computador? <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="faq-a"><p>Não. O Nexus360 é um PWA — funciona direto no navegador e pode ser instalado na tela inicial do celular ou computador, sem loja de apps.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Como funciona a integração com o Bling? <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="faq-a"><p>Você autoriza o acesso via OAuth do Bling. Depois disso, o Nexus360 sincroniza pedidos, compras, produtos e lojas automaticamente, com atualização diária agendada e opção de sync manual.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Meus dados ficam seguros? <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="faq-a"><p>Sim. Os dados são armazenados no Supabase com políticas de Row Level Security (RLS) e o app usa tokens de leitura próprios para cada cliente.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q">Posso trocar de plano depois? <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+      <div class="faq-a"><p>Sim, os planos podem ser ajustados a qualquer momento conforme o crescimento da sua operação.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final" id="cta">
+  <h2>Pronto para ver seus números de outro jeito?</h2>
+  <p>Agende uma demonstração e veja o Nexus360 rodando com dados reais da sua operação.</p>
+  <div class="actions">
+    <a href="mailto:luizhenriquefrancisconi@gmail.com?subject=Demonstração%20Nexus360" class="btn btn-primary btn-lg">Solicitar demonstração</a>
+    <a href="#planos" class="btn btn-outline-w btn-lg">Ver planos</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="logo"><span class="logo-mark"></span>Nexus360</div>
+      <p>Dashboard de vendas, estoque e produtos, integrado ao Bling e sincronizado via Supabase.</p>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>Produto</h4>
+        <a href="#recursos">Recursos</a>
+        <a href="#produto">O app</a>
+        <a href="#planos">Planos</a>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <a href="#como-funciona">Como funciona</a>
+        <a href="#faq">FAQ</a>
+        <a href="mailto:luizhenriquefrancisconi@gmail.com">Contato</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 Nexus360. Todos os direitos reservados.</span>
+    <span>Feito por LHF</span>
+  </div>
+</footer>
+
+<script>
+// mobile menu (simple toggle of nav links display)
+document.querySelector('.menu-btn').addEventListener('click',()=>{
+  const nl=document.querySelector('.nav-links');
+  nl.style.display = nl.style.display==='flex' ? 'none' : 'flex';
+  nl.style.cssText += 'position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:16px 24px;gap:16px;border-bottom:1px solid #e5e7eb';
+});
+
+// FAQ accordion
+document.querySelectorAll('.faq-item').forEach(item=>{
+  const q=item.querySelector('.faq-q'), a=item.querySelector('.faq-a');
+  q.addEventListener('click',()=>{
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(o=>{o.classList.remove('open');o.querySelector('.faq-a').style.maxHeight=null;});
+    if(!isOpen){ item.classList.add('open'); a.style.maxHeight=a.scrollHeight+'px'; }
+  });
+});
+
+// 3D tilt on hover for cards
+function attachTilt(el,intensity){
+  intensity = intensity || 10;
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    el.style.transform=`perspective(900px) rotateY(${x*intensity}deg) rotateX(${-y*intensity}deg) translateY(-4px)`;
+  });
+  el.addEventListener('mouseleave',()=>{ el.style.transform='perspective(900px) rotateY(0) rotateX(0) translateY(0)'; });
+}
+document.querySelectorAll('.tilt').forEach(el=>attachTilt(el,9));
+document.querySelectorAll('.tilt-soft').forEach(el=>attachTilt(el,14));
+
+// 3D tilt for hero phone, following mouse across whole stage
+const stage=document.getElementById('phoneStage');
+const heroPhone=document.getElementById('heroPhone');
+if(stage && heroPhone){
+  stage.addEventListener('mousemove',e=>{
+    const r=stage.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    heroPhone.style.transform=`rotateY(${-16 + x*22}deg) rotateX(${6 - y*16}deg) rotateZ(1deg)`;
+  });
+  stage.addEventListener('mouseleave',()=>{
+    heroPhone.style.transform='rotateY(-16deg) rotateX(6deg) rotateZ(1deg)';
+  });
+}
+
+// parallax blobs following scroll slightly
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  document.querySelectorAll('.blob').forEach((b,i)=>{
+    b.style.transform=`translateY(${y*0.05*(i+1)}px)`;
+  });
+});
+</script>
+
+<!-- ---------- ASSISTENTE VIRTUAL ---------- -->
+<style>
+.chat-fab{position:fixed;bottom:22px;right:22px;width:60px;height:60px;border-radius:50%;background:linear-gradient(145deg,#2f6cf5,var(--blue));border:none;cursor:pointer;box-shadow:0 14px 30px rgba(26,86,219,.45);z-index:200;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.chat-fab:hover{transform:scale(1.06)}
+.chat-fab svg{width:26px;height:26px;color:#fff}
+.chat-fab .dot{position:absolute;top:6px;right:6px;width:11px;height:11px;border-radius:50%;background:var(--green);border:2px solid #fff}
+.chat-panel{position:fixed;bottom:96px;right:22px;width:340px;max-width:calc(100vw - 32px);height:460px;max-height:calc(100vh - 140px);background:#fff;border-radius:20px;box-shadow:0 30px 60px -12px rgba(15,23,42,.35);z-index:200;display:none;flex-direction:column;overflow:hidden;border:1px solid var(--bdr)}
+.chat-panel.open{display:flex}
+.chat-head{background:linear-gradient(150deg,var(--blue),var(--blue2));color:#fff;padding:16px 18px;display:flex;align-items:center;gap:10px}
+.chat-head .av{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-head .nm{font-weight:700;font-size:14.5px}
+.chat-head .st{font-size:11.5px;opacity:.8;display:flex;align-items:center;gap:5px}
+.chat-head .st .d{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.chat-close{margin-left:auto;background:none;border:none;color:#fff;opacity:.8;cursor:pointer;font-size:18px;line-height:1;padding:4px}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8fafc}
+.msg{max-width:82%;padding:10px 13px;border-radius:14px;font-size:13.5px;line-height:1.45}
+.msg.bot{align-self:flex-start;background:#fff;border:1px solid var(--bdr);border-bottom-left-radius:4px}
+.msg.user{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.msg.typing{align-self:flex-start;background:#fff;border:1px solid var(--bdr);border-bottom-left-radius:4px;display:flex;gap:4px;padding:12px 14px}
+.msg.typing span{width:6px;height:6px;border-radius:50%;background:#94a3b8;animation:typingDot 1.1s infinite}
+.msg.typing span:nth-child(2){animation-delay:.15s}
+.msg.typing span:nth-child(3){animation-delay:.3s}
+@keyframes typingDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.chat-suggest{display:flex;flex-wrap:wrap;gap:6px;padding:0 16px 12px}
+.chat-suggest button{font-size:11.5px;font-weight:600;color:var(--blue);background:var(--blue-l);border:none;border-radius:100px;padding:6px 11px;cursor:pointer}
+.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--bdr);background:#fff}
+.chat-foot input{flex:1;border:1.5px solid var(--bdr);border-radius:11px;padding:10px 12px;font-size:13.5px;font-family:inherit}
+.chat-foot input:focus{outline:none;border-color:var(--blue)}
+.chat-foot button{background:var(--blue);border:none;color:#fff;border-radius:11px;width:40px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-foot button:disabled{opacity:.5;cursor:default}
+@media(max-width:480px){.chat-panel{right:16px;bottom:88px}.chat-fab{right:16px;bottom:16px}}
+</style>
+
+<button class="chat-fab" id="chatFab" aria-label="Abrir assistente virtual">
+  <span class="dot"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div class="av"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#fff"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+    <div>
+      <div class="nm">Assistente Nexus360</div>
+      <div class="st"><span class="d"></span> Online agora</div>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="Fechar">✕</button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="msg bot">Oi! 👋 Sou o assistente do Nexus360. Posso ajudar com dúvidas sobre recursos, planos, integração com o Bling ou como agendar uma demonstração. Como posso ajudar?</div>
+  </div>
+  <div class="chat-suggest" id="chatSuggest">
+    <button type="button">Quais os planos?</button>
+    <button type="button">Como integra com o Bling?</button>
+    <button type="button">Funciona no celular?</button>
+  </div>
+  <div class="chat-foot">
+    <input id="chatInput" type="text" placeholder="Escreva sua pergunta..." autocomplete="off">
+    <button id="chatSend" aria-label="Enviar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const fab=document.getElementById('chatFab'), panel=document.getElementById('chatPanel'), closeBtn=document.getElementById('chatClose');
+  const body=document.getElementById('chatBody'), input=document.getElementById('chatInput'), sendBtn=document.getElementById('chatSend');
+  const suggestWrap=document.getElementById('chatSuggest');
+  let history=[]; // {role:'user'|'assistant', content:'...'}
+  let busy=false;
+
+  fab.addEventListener('click',()=>{ panel.classList.toggle('open'); if(panel.classList.contains('open')) input.focus(); });
+  closeBtn.addEventListener('click',()=>panel.classList.remove('open'));
+
+  function addMsg(text, who){
+    const el=document.createElement('div');
+    el.className='msg '+who;
+    el.textContent=text;
+    body.appendChild(el);
+    body.scrollTop=body.scrollHeight;
+    return el;
+  }
+  function addTyping(){
+    const el=document.createElement('div');
+    el.className='msg typing';
+    el.innerHTML='<span></span><span></span><span></span>';
+    body.appendChild(el);
+    body.scrollTop=body.scrollHeight;
+    return el;
+  }
+
+  async function send(text){
+    text=(text||'').trim();
+    if(!text || busy) return;
+    if(suggestWrap) suggestWrap.remove();
+    addMsg(text,'user');
+    history.push({role:'user',content:text});
+    input.value='';
+    busy=true; sendBtn.disabled=true;
+    const typingEl=addTyping();
+    try{
+      const r=await fetch('/api/chat',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({messages:history})
+      });
+      const data=await r.json();
+      typingEl.remove();
+      if(!r.ok || data.error){
+        addMsg('Ops, tive um problema para responder agora. Tente de novo em instantes ou fale direto: luizhenriquefrancisconi@gmail.com','bot');
+      }else{
+        addMsg(data.reply,'bot');
+        history.push({role:'assistant',content:data.reply});
+      }
+    }catch(err){
+      typingEl.remove();
+      addMsg('Sem conexão no momento. Tente novamente em instantes.','bot');
+    }
+    busy=false; sendBtn.disabled=false;
+  }
+
+  sendBtn.addEventListener('click',()=>send(input.value));
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter') send(input.value); });
+  if(suggestWrap){
+    suggestWrap.querySelectorAll('button').forEach(b=>{
+      b.addEventListener('click',()=>send(b.textContent));
+    });
+  }
+})();
+</script>
+</body>
+</html>
