@@ -701,5 +701,53 @@ window.addEventListener('scroll',()=>{
   }
 })();
 </script>
+
+<!-- MODAL: Solicitar demonstração / criar conta -->
+<div id="demo-bg" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(15,23,42,.55);backdrop-filter:blur(3px);align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--card);border-radius:20px;max-width:440px;width:100%;padding:26px;box-shadow:0 30px 70px rgba(2,6,23,.35);max-height:92vh;overflow:auto">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+      <div>
+        <h3 style="font-size:22px;font-weight:800;letter-spacing:-.4px">Solicitar demonstração</h3>
+        <p style="color:var(--t2);font-size:14px;margin-top:4px">Preencha e comece agora com <b>7 dias grátis</b>, sem cartão.</p>
+      </div>
+      <button onclick="fecharDemo()" aria-label="Fechar" style="background:none;border:none;font-size:24px;line-height:1;color:var(--t2);cursor:pointer">×</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:18px">
+      <label style="font-size:13px;font-weight:600;color:var(--text)">Seu nome
+        <input id="dm-nome" type="text" placeholder="Como podemos te chamar" style="width:100%;margin-top:5px;padding:12px;border:1.5px solid var(--bdr);border-radius:11px;font-size:15px"></label>
+      <label style="font-size:13px;font-weight:600;color:var(--text)">Nome da empresa
+        <input id="dm-empresa" type="text" placeholder="Minha Empresa Ltda" style="width:100%;margin-top:5px;padding:12px;border:1.5px solid var(--bdr);border-radius:11px;font-size:15px"></label>
+      <label style="font-size:13px;font-weight:600;color:var(--text)">WhatsApp
+        <input id="dm-fone" type="tel" inputmode="tel" placeholder="(00) 00000-0000" style="width:100%;margin-top:5px;padding:12px;border:1.5px solid var(--bdr);border-radius:11px;font-size:15px"></label>
+      <label style="font-size:13px;font-weight:600;color:var(--text)">E-mail
+        <input id="dm-email" type="email" inputmode="email" placeholder="voce@empresa.com" style="width:100%;margin-top:5px;padding:12px;border:1.5px solid var(--bdr);border-radius:11px;font-size:15px"></label>
+      <div id="dm-err" style="color:#dc2626;font-size:13px;min-height:1px"></div>
+      <button class="btn btn-primary btn-lg" style="width:100%" onclick="enviarDemo()">Continuar e criar acesso →</button>
+      <p style="color:var(--t2);font-size:11px;text-align:center">No próximo passo você define uma senha e já entra no app.</p>
+    </div>
+  </div>
+</div>
+<script>
+  const APP_URL='https://www.nexus360saas.com.br';
+  function abrirDemo(){document.getElementById('demo-bg').style.display='flex';setTimeout(()=>document.getElementById('dm-nome').focus(),80);}
+  function fecharDemo(){document.getElementById('demo-bg').style.display='none';}
+  document.getElementById('demo-bg').addEventListener('click',e=>{if(e.target.id==='demo-bg')fecharDemo();});
+  function enviarDemo(){
+    const nome=document.getElementById('dm-nome').value.trim();
+    const empresa=document.getElementById('dm-empresa').value.trim();
+    const fone=document.getElementById('dm-fone').value.trim();
+    const email=document.getElementById('dm-email').value.trim();
+    const err=document.getElementById('dm-err');
+    if(!empresa){err.textContent='Informe o nome da empresa.';return;}
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){err.textContent='Informe um e-mail válido.';return;}
+    // leva os dados para o app, que finaliza o cadastro (definir senha) e dá acesso
+    const q=new URLSearchParams({signup:'1',nome,empresa,email,fone});
+    window.location.href=APP_URL+'/?'+q.toString();
+  }
+  // Todo botão/âncora de "demonstração" ou "#cta" passa a abrir o formulário
+  document.querySelectorAll('a[href="#cta"], a[href^="mailto:luizhenriquefrancisconi"]').forEach(a=>{
+    a.addEventListener('click',e=>{e.preventDefault();abrirDemo();});
+  });
+</script>
 </body>
 </html>
