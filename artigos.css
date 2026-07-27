@@ -1,0 +1,37 @@
+/* Estilo das páginas de conteúdo (SEO) — alinhado à landing do Nexus360 */
+:root{--blue:#1a56db;--blue2:#0a2e7a;--blue-l:#e8f0fe;--green:#059669;--bg:#f5f7fa;--card:#fff;--text:#0f172a;--t2:#64748b;--bdr:#e5e7eb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:17px}
+a{color:var(--blue)}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--bdr)}
+nav{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--blue2);text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo-mark{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--blue),var(--blue2));display:inline-block}
+nav .cta{background:var(--blue);color:#fff;text-decoration:none;padding:9px 18px;border-radius:10px;font-weight:600;font-size:14px}
+.hero{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;padding:46px 20px}
+.hero .in{max-width:800px;margin:0 auto}
+.hero .crumb{font-size:13px;color:#bcd0ff;margin-bottom:12px}
+.hero .crumb a{color:#bcd0ff}
+.hero h1{font-size:32px;line-height:1.2;margin:0 0 10px}
+.hero p{font-size:17px;color:#dce6ff;margin:0}
+.wrap{max-width:800px;margin:0 auto;padding:34px 20px 60px}
+article h2{font-size:23px;margin:34px 0 10px;color:var(--blue2)}
+article h3{font-size:18px;margin:22px 0 6px}
+article ul{padding-left:22px}
+article li{margin:6px 0}
+.lead{font-size:19px;color:var(--text)}
+.box{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:20px 22px;margin:22px 0}
+.box-blue{background:var(--blue-l);border-color:#c7dbff}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:15px;background:var(--card)}
+th,td{border:1px solid var(--bdr);padding:10px 12px;text-align:left}
+th{background:var(--blue-l)}
+.cta-final{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:16px;padding:30px;text-align:center;margin:40px 0 0}
+.cta-final h2{color:#fff;margin:0 0 8px}
+.cta-final p{color:#dce6ff;margin:0 0 18px}
+.cta-final a{background:#fff;color:var(--blue2);text-decoration:none;padding:13px 28px;border-radius:12px;font-weight:700;display:inline-block}
+.rel{border-top:1px solid var(--bdr);margin-top:44px;padding-top:20px}
+.rel h3{font-size:15px;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px}
+.rel a{display:block;padding:8px 0}
+footer{border-top:1px solid var(--bdr);background:var(--card);padding:24px 20px;text-align:center;color:var(--t2);font-size:14px}
+footer a{margin:0 8px}
+@media(max-width:600px){.hero h1{font-size:26px}body{font-size:16px}}
