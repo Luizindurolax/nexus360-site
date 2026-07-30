@@ -171,6 +171,46 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .show-lbl{text-align:center;margin-top:16px;font-weight:700;font-size:14.5px}
 .show-lbl span{display:block;font-weight:500;font-size:12.5px;color:var(--t2);margin-top:2px}
 
+/* ---------- CAROUSEL (telas do app) ---------- */
+.showcase2{padding:20px 24px 100px}
+.car-wrap{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:50px;align-items:center}
+.car-count{color:var(--t2);font-weight:700;font-size:13.5px;letter-spacing:.5px;margin-bottom:10px}
+.car-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 26px}
+.car-tab{background:#fff;border:1px solid var(--bdr);border-radius:100px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--t2);cursor:pointer;transition:.15s}
+.car-tab.on{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 8px 16px rgba(26,86,219,.3)}
+.car-nav{display:flex;gap:10px}
+.car-btn{width:42px;height:42px;border-radius:50%;background:#fff;border:1.5px solid var(--bdr);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text);transition:.15s}
+.car-btn:hover{border-color:var(--blue);color:var(--blue)}
+.car-stage{position:relative;display:flex;justify-content:center;min-height:452px}
+.car-slide{position:absolute;inset:0;display:flex;justify-content:center;opacity:0;transform:translateX(24px);transition:opacity .35s,transform .35s;pointer-events:none}
+.car-slide.on{opacity:1;transform:translateX(0);pointer-events:auto}
+.car-slide .phone{width:220px;height:452px;transform:none;margin:0}
+
+/* ---------- MCP + IA ---------- */
+.mcpai{padding:20px 24px 100px}
+.mcp-grid{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center;max-width:1100px;margin:0 auto}
+.mcp-badges{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+.mcp-badge{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--bdr);border-radius:12px;padding:9px 14px;font-size:13px;font-weight:700}
+.mcp-badge small{display:block;font-weight:500;color:var(--t2);font-size:11px}
+.mcp-panel{background:#fff;border:1px solid var(--bdr);border-radius:20px;overflow:hidden;box-shadow:0 20px 46px -20px rgba(15,23,42,.22)}
+.mcp-head{background:linear-gradient(150deg,var(--blue),var(--blue2));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700}
+.mcp-head .d{width:7px;height:7px;border-radius:50%;background:#34d399}
+.mcp-body{padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8fafc;max-height:340px;overflow:auto}
+.mcp-msg{max-width:88%;padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.5}
+.mcp-msg.user{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:4px}
+.mcp-msg.bot{align-self:flex-start;background:#fff;border:1px solid var(--bdr);border-bottom-left-radius:4px}
+.mcp-mini{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.mcp-mini b{display:block;font-size:15px}
+.mcp-mini .c{flex:1;min-width:90px;background:var(--bg);border-radius:10px;padding:8px 10px;font-size:10.5px;color:var(--t2);font-weight:700}
+
+/* ---------- INSIGHTS ---------- */
+.insights{padding:20px 24px 100px;background:linear-gradient(180deg,var(--bg),#fff)}
+.ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:900px;margin:0 auto}
+.ins-card{background:#fff;border:1px solid var(--bdr);border-radius:18px;padding:22px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+.ins-ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:12px}
+.ins-card h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.ins-card p{font-size:13px;color:var(--t2)}
+
 /* ---------- HOW IT WORKS ---------- */
 .how{padding:20px 24px 100px}
 .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;max-width:1050px;margin:0 auto;position:relative}
@@ -241,6 +281,10 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
   .how-grid{grid-template-columns:1fr;gap:36px}
   .how-grid::before{display:none}
   .price-grid{grid-template-columns:1fr;max-width:380px}
+  .car-wrap{grid-template-columns:1fr;text-align:center}
+  .car-nav{justify-content:center}
+  .mcp-grid{grid-template-columns:1fr}
+  .ins-grid{grid-template-columns:1fr;max-width:420px}
 }
 @media(max-width:520px){
   .feat-grid{grid-template-columns:1fr}
@@ -390,57 +434,124 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
   </div>
 </section>
 
-<section class="showcase" id="produto">
+<section class="mcpai" id="ia">
+  <div class="mcp-grid">
+    <div>
+      <div class="sec-tag" style="text-align:left">MCP + sua IA preferida</div>
+      <h2 style="font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.8px;margin-bottom:14px">Pergunte à sua IA.<br>Receba a resposta com os dados do Bling.</h2>
+      <p style="color:var(--t2);font-size:15.5px;max-width:440px;margin-bottom:22px">Conecte o Nexus360 ao ChatGPT, Claude ou à IA que você já usa via MCP. Pergunte sobre vendas, estoque ou financeiro em português e receba a resposta com os números reais da sua operação.</p>
+      <div class="mcp-badges">
+        <div class="mcp-badge">ChatGPT<small>Compatível via MCP</small></div>
+        <div class="mcp-badge">Claude<small>Compatível via MCP</small></div>
+      </div>
+    </div>
+    <div class="mcp-panel tilt-soft">
+      <div class="mcp-head"><span class="d"></span> Nexus360 · conectado via MCP</div>
+      <div class="mcp-body">
+        <div class="mcp-msg user">Como está meu estoque esta semana?</div>
+        <div class="mcp-msg bot">
+          Analisei os dados sincronizados do Bling. 3 pontos merecem atenção:
+          <div class="mcp-mini">
+            <div class="c"><b style="color:var(--red)">14</b>produtos em ruptura</div>
+            <div class="c"><b style="color:var(--orange)">37</b>itens em crítico</div>
+            <div class="c"><b style="color:var(--blue)">R$ 92k</b>parados sem giro</div>
+          </div>
+        </div>
+        <div class="mcp-msg user">Quais devo repor primeiro?</div>
+        <div class="mcp-msg bot">Priorize os 14 itens em ruptura. Os 5 mais urgentes representam <b>R$ 11,4 mil</b> em vendas potenciais nos próximos 7 dias.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="insights">
+  <div class="sec-head">
+    <div class="sec-tag">Insights automáticos</div>
+    <h2>Os números já vêm com contexto</h2>
+    <p>O Nexus360 aponta variações, riscos e oportunidades — você não perde tempo procurando o que mudou.</p>
+  </div>
+  <div class="ins-grid">
+    <div class="ins-card tilt">
+      <div class="ins-ic" style="background:#fee2e2;color:#991b1b">↘</div>
+      <h4>Queda de receita detectada</h4>
+      <p>Ticket médio estável — o problema é volume de pedidos. Confira o canal que perdeu força esta semana.</p>
+    </div>
+    <div class="ins-card tilt">
+      <div class="ins-ic" style="background:#dcfce7;color:#166534">↗</div>
+      <h4>Oportunidade de expansão</h4>
+      <p>Um canal concentra mais da metade da receita do mês — bom sinal pra investir em anúncio ali.</p>
+    </div>
+  </div>
+</section>
+
+<section class="showcase2" id="produto">
   <div class="sec-head">
     <div class="sec-tag">O app por dentro</div>
-    <h2>Feito para uso rápido, no dia a dia</h2>
-    <p>Telas pensadas para decisões rápidas: números primeiro, detalhes a um toque de distância.</p>
+    <h2>Cada área da sua empresa, numa visão só</h2>
+    <p>Navegue pelas telas e veja como o Nexus360 transforma a rotina de gestão.</p>
   </div>
-  <div class="show-grid">
+  <div class="car-wrap">
     <div>
-      <div class="show-phone tilt-soft">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="ph-topbar"><div class="ttl">DASHBOARD</div><div class="val">Visão geral</div></div>
-            <div class="ph-kpis">
-              <div class="ph-kpi"><div class="l">Receita</div><div class="v">R$84k</div><div class="bar" style="background:var(--blue)"></div></div>
-              <div class="ph-kpi"><div class="l">Pedidos</div><div class="v">312</div><div class="bar" style="background:var(--green)"></div></div>
-            </div>
-            <div class="ph-chart"><div class="l">Top produtos</div><div class="ph-bars"><i style="height:90%"></i><i style="height:60%"></i><i style="height:75%"></i><i style="height:45%"></i></div></div>
-          </div>
-        </div>
+      <div class="car-count" id="carCount">01 / 05</div>
+      <h3 id="carTitle" style="font-size:20px;font-weight:800;margin-bottom:8px">Dashboard</h3>
+      <p id="carDesc" style="color:var(--t2);font-size:14.5px;max-width:340px">KPIs e gráficos consolidados: receita, pedidos, ticket médio e produtos em alta.</p>
+      <div class="car-tabs" id="carTabs"></div>
+      <div class="car-nav">
+        <button class="car-btn" id="carPrev" aria-label="Anterior">←</button>
+        <button class="car-btn" id="carNext" aria-label="Próxima">→</button>
       </div>
-      <div class="show-lbl">Dashboard<span>KPIs e gráficos consolidados</span></div>
     </div>
-    <div>
-      <div class="show-phone tilt-soft">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="ph-topbar"><div class="ttl">PRODUTOS</div><div class="val">1.234 itens</div></div>
-            <div class="ph-list" style="margin:14px 12px">
-              <div class="ph-row"><div><div class="nm">Kit Organizador</div><div class="sub">Estoque: 84</div></div><span class="tag tag-ok">Saudável</span></div>
-              <div class="ph-row"><div><div class="nm">Luminária LED</div><div class="sub">Estoque: 3</div></div><span class="tag tag-warn">Crítico</span></div>
-              <div class="ph-row"><div><div class="nm">Cadeira Gamer</div><div class="sub">Estoque: 0</div></div><span class="tag" style="background:#fee2e2;color:#991b1b">Ruptura</span></div>
-            </div>
+    <div class="car-stage" id="carStage">
+      <div class="car-slide on">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar"><div class="ttl">DASHBOARD</div><div class="val">Visão geral</div></div>
+          <div class="ph-kpis">
+            <div class="ph-kpi"><div class="l">Receita</div><div class="v">R$84k</div><div class="bar" style="background:var(--blue)"></div></div>
+            <div class="ph-kpi"><div class="l">Pedidos</div><div class="v">312</div><div class="bar" style="background:var(--green)"></div></div>
           </div>
-        </div>
+          <div class="ph-chart"><div class="l">Top produtos</div><div class="ph-bars"><i style="height:90%"></i><i style="height:60%"></i><i style="height:75%"></i><i style="height:45%"></i></div></div>
+        </div></div>
       </div>
-      <div class="show-lbl">Produtos<span>Status de estoque por SKU</span></div>
-    </div>
-    <div>
-      <div class="show-phone tilt-soft">
-        <div class="phone">
-          <div class="phone-screen">
-            <div class="ph-topbar"><div class="ttl">VENDAS</div><div class="val">Por canal</div></div>
-            <div class="ph-list" style="margin:14px 12px">
-              <div class="ph-row"><div><div class="nm">Loja Online</div><div class="sub">158 pedidos</div></div><span class="tag tag-ok">R$41k</span></div>
-              <div class="ph-row"><div><div class="nm">Marketplace</div><div class="sub">96 pedidos</div></div><span class="tag tag-ok">R$27k</span></div>
-              <div class="ph-row"><div><div class="nm">Loja Física</div><div class="sub">58 pedidos</div></div><span class="tag tag-warn">R$16k</span></div>
-            </div>
+      <div class="car-slide">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar"><div class="ttl">PRODUTOS</div><div class="val">1.234 itens</div></div>
+          <div class="ph-list" style="margin:14px 12px">
+            <div class="ph-row"><div><div class="nm">Kit Organizador</div><div class="sub">Estoque: 84</div></div><span class="tag tag-ok">Saudável</span></div>
+            <div class="ph-row"><div><div class="nm">Luminária LED</div><div class="sub">Estoque: 3</div></div><span class="tag tag-warn">Crítico</span></div>
+            <div class="ph-row"><div><div class="nm">Cadeira Gamer</div><div class="sub">Estoque: 0</div></div><span class="tag" style="background:#fee2e2;color:#991b1b">Ruptura</span></div>
           </div>
-        </div>
+        </div></div>
       </div>
-      <div class="show-lbl">Vendas<span>Filtros por cliente e canal</span></div>
+      <div class="car-slide">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar"><div class="ttl">VENDAS</div><div class="val">Por canal</div></div>
+          <div class="ph-list" style="margin:14px 12px">
+            <div class="ph-row"><div><div class="nm">Loja Online</div><div class="sub">158 pedidos</div></div><span class="tag tag-ok">R$41k</span></div>
+            <div class="ph-row"><div><div class="nm">Marketplace</div><div class="sub">96 pedidos</div></div><span class="tag tag-ok">R$27k</span></div>
+            <div class="ph-row"><div><div class="nm">Loja Física</div><div class="sub">58 pedidos</div></div><span class="tag tag-warn">R$16k</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="car-slide">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar"><div class="ttl">CLIENTES · RFM</div><div class="val">842 clientes</div></div>
+          <div class="ph-list" style="margin:14px 12px">
+            <div class="ph-row"><div><div class="nm">Campeões</div><div class="sub">96 clientes</div></div><span class="tag tag-ok">R$58k</span></div>
+            <div class="ph-row"><div><div class="nm">Em risco</div><div class="sub">44 clientes</div></div><span class="tag tag-warn">Recompra</span></div>
+            <div class="ph-row"><div><div class="nm">Perdidos</div><div class="sub">120 clientes</div></div><span class="tag" style="background:#fee2e2;color:#991b1b">Reativar</span></div>
+          </div>
+        </div></div>
+      </div>
+      <div class="car-slide">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar"><div class="ttl">DRE</div><div class="val">Margem real</div></div>
+          <div class="ph-kpis">
+            <div class="ph-kpi"><div class="l">Receita</div><div class="v">R$287k</div><div class="bar" style="background:var(--blue)"></div></div>
+            <div class="ph-kpi"><div class="l">Lucro</div><div class="v">R$98k</div><div class="bar" style="background:var(--green)"></div></div>
+          </div>
+          <div class="ph-chart"><div class="l">Custo × Receita</div><div class="ph-bars"><i style="height:70%"></i><i style="height:40%"></i><i style="height:85%"></i><i style="height:55%"></i></div></div>
+        </div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -647,6 +758,36 @@ if(stage && heroPhone){
     heroPhone.style.transform='rotateY(-16deg) rotateX(6deg) rotateZ(1deg)';
   });
 }
+
+// carrossel de telas do app (showcase2)
+(function(){
+  const slides=document.querySelectorAll('#carStage .car-slide');
+  if(!slides.length) return;
+  const titles=['Dashboard','Produtos','Vendas','Clientes · RFM','DRE'];
+  const descs=[
+    'KPIs e gráficos consolidados: receita, pedidos, ticket médio e produtos em alta.',
+    'Status de estoque por SKU, com alertas de crítico e ruptura em tempo real.',
+    'Vendas por canal e cliente, com filtros por período e marketplace.',
+    'Segmentação de clientes por Recência, Frequência e Valor — pronta para campanhas.',
+    'Receita menos custo, taxas e impostos — o lucro real, não só o faturamento.'
+  ];
+  const tabsEl=document.getElementById('carTabs'), countEl=document.getElementById('carCount');
+  const titleEl=document.getElementById('carTitle'), descEl=document.getElementById('carDesc');
+  let cur=0;
+  tabsEl.innerHTML=titles.map((t,i)=>`<button type="button" class="car-tab${i===0?' on':''}" data-i="${i}">${t}</button>`).join('');
+  function go(i){
+    cur=(i+slides.length)%slides.length;
+    slides.forEach((s,k)=>s.classList.toggle('on',k===cur));
+    tabsEl.querySelectorAll('.car-tab').forEach((b,k)=>b.classList.toggle('on',k===cur));
+    countEl.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+    titleEl.textContent=titles[cur]; descEl.textContent=descs[cur];
+  }
+  document.getElementById('carPrev').addEventListener('click',()=>go(cur-1));
+  document.getElementById('carNext').addEventListener('click',()=>go(cur+1));
+  tabsEl.addEventListener('click',e=>{const b=e.target.closest('.car-tab'); if(b)go(+b.dataset.i);});
+  let auto=setInterval(()=>go(cur+1),6000);
+  document.getElementById('carStage').addEventListener('mouseenter',()=>clearInterval(auto));
+})();
 
 // parallax blobs following scroll slightly
 window.addEventListener('scroll',()=>{
