@@ -181,10 +181,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .car-nav{display:flex;gap:10px}
 .car-btn{width:42px;height:42px;border-radius:50%;background:#fff;border:1.5px solid var(--bdr);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text);transition:.15s}
 .car-btn:hover{border-color:var(--blue);color:var(--blue)}
-.car-stage{position:relative;display:flex;justify-content:center;min-height:452px}
-.car-slide{position:absolute;inset:0;display:flex;justify-content:center;opacity:0;transform:translateX(24px);transition:opacity .35s,transform .35s;pointer-events:none}
-.car-slide.on{opacity:1;transform:translateX(0);pointer-events:auto}
-.car-slide .phone{width:220px;height:452px;transform:none;margin:0}
+.car-stage{position:relative;display:flex;align-items:center;justify-content:center;min-height:490px}
+.car-stage::before{content:"";position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,var(--blue-l) 0%,rgba(232,240,254,0) 70%);z-index:0}
+.car-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(24px) scale(.97);transition:opacity .35s,transform .35s;pointer-events:none;z-index:1}
+.car-slide.on{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}
+.car-slide .phone{width:220px;height:452px;transform:none;margin:0;box-shadow:0 40px 80px -24px rgba(10,20,60,.35),0 10px 30px rgba(10,20,60,.18)}
+.car-slide .phone-screen{display:flex;flex-direction:column}
+.car-slide .ph-list{flex:1}
+.car-slide .ph-nav{position:static;margin-top:auto}
 
 /* ---------- MCP + IA ---------- */
 .mcpai{padding:20px 24px 100px}
@@ -524,6 +528,11 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
             <div class="ph-kpi"><div class="l">Pedidos</div><div class="v">312</div><div class="bar" style="background:var(--green)"></div></div>
           </div>
           <div class="ph-chart"><div class="l">Top produtos</div><div class="ph-bars"><i style="height:90%"></i><i style="height:60%"></i><i style="height:75%"></i><i style="height:45%"></i></div></div>
+          <div class="ph-list">
+            <div class="ph-row"><div><div class="nm">Ticket médio</div><div class="sub">últimos 7 dias</div></div><span class="tag tag-ok">R$270</span></div>
+            <div class="ph-row"><div><div class="nm">Vendedores ativos</div><div class="sub">no período</div></div><span class="tag tag-ok">9</span></div>
+          </div>
+          <div class="ph-nav"><div class="it on"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div></div>
         </div></div>
       </div>
       <div class="car-slide">
@@ -533,7 +542,9 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
             <div class="ph-row"><div><div class="nm">Kit Organizador</div><div class="sub">Estoque: 84</div></div><span class="tag tag-ok">Saudável</span></div>
             <div class="ph-row"><div><div class="nm">Luminária LED</div><div class="sub">Estoque: 3</div></div><span class="tag tag-warn">Crítico</span></div>
             <div class="ph-row"><div><div class="nm">Cadeira Gamer</div><div class="sub">Estoque: 0</div></div><span class="tag" style="background:#fee2e2;color:#991b1b">Ruptura</span></div>
+            <div class="ph-row"><div><div class="nm">Mochila Urbana</div><div class="sub">Estoque: 41</div></div><span class="tag tag-ok">Saudável</span></div>
           </div>
+          <div class="ph-nav"><div class="it"></div><div class="it on"></div><div class="it"></div><div class="it"></div><div class="it"></div></div>
         </div></div>
       </div>
       <div class="car-slide">
@@ -544,6 +555,8 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
             <div class="ph-row"><div><div class="nm">Marketplace</div><div class="sub">96 pedidos</div></div><span class="tag tag-ok">R$27k</span></div>
             <div class="ph-row"><div><div class="nm">Loja Física</div><div class="sub">58 pedidos</div></div><span class="tag tag-warn">R$16k</span></div>
           </div>
+          <div class="ph-chart" style="margin:2px 12px 0"><div class="l">Vendas · últimos 7 dias</div><div class="ph-bars"><i style="height:40%"></i><i style="height:65%"></i><i style="height:50%"></i><i style="height:80%"></i><i style="height:55%"></i><i style="height:95%"></i><i style="height:70%"></i></div></div>
+          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it on"></div><div class="it"></div><div class="it"></div></div>
         </div></div>
       </div>
       <div class="car-slide">
@@ -551,9 +564,11 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
           <div class="ph-topbar"><div class="ttl">CLIENTES · RFM</div><div class="val">842 clientes</div></div>
           <div class="ph-list" style="margin:14px 12px">
             <div class="ph-row"><div><div class="nm">Campeões</div><div class="sub">96 clientes</div></div><span class="tag tag-ok">R$58k</span></div>
+            <div class="ph-row"><div><div class="nm">Fiéis</div><div class="sub">210 clientes</div></div><span class="tag tag-ok">R$34k</span></div>
             <div class="ph-row"><div><div class="nm">Em risco</div><div class="sub">44 clientes</div></div><span class="tag tag-warn">Recompra</span></div>
             <div class="ph-row"><div><div class="nm">Perdidos</div><div class="sub">120 clientes</div></div><span class="tag" style="background:#fee2e2;color:#991b1b">Reativar</span></div>
           </div>
+          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it"></div><div class="it on"></div><div class="it"></div></div>
         </div></div>
       </div>
       <div class="car-slide">
@@ -564,6 +579,11 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
             <div class="ph-kpi"><div class="l">Lucro</div><div class="v">R$98k</div><div class="bar" style="background:var(--green)"></div></div>
           </div>
           <div class="ph-chart"><div class="l">Custo × Receita</div><div class="ph-bars"><i style="height:70%"></i><i style="height:40%"></i><i style="height:85%"></i><i style="height:55%"></i></div></div>
+          <div class="ph-list">
+            <div class="ph-row"><div><div class="nm">Margem líquida</div><div class="sub">no mês</div></div><span class="tag tag-ok">34,1%</span></div>
+            <div class="ph-row"><div><div class="nm">Despesas</div><div class="sub">fixas + taxas</div></div><span class="tag tag-warn">R$189k</span></div>
+          </div>
+          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it on"></div></div>
         </div></div>
       </div>
     </div>
