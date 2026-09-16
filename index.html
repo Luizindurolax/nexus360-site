@@ -513,7 +513,7 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
   </div>
   <div class="car-wrap">
     <div>
-      <div class="car-count" id="carCount">01 / 05</div>
+      <div class="car-count" id="carCount">01 / 07</div>
       <h3 id="carTitle" style="font-size:20px;font-weight:800;margin-bottom:8px">Dashboard</h3>
       <p id="carDesc" style="color:var(--t2);font-size:14.5px;max-width:340px">KPIs e gráficos consolidados: receita, pedidos, ticket médio e produtos em alta.</p>
       <div class="car-tabs" id="carTabs"></div>
@@ -586,7 +586,32 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
             <div class="ph-row"><div><div class="nm">Margem líquida</div><div class="sub">no mês</div></div><span class="tag tag-ok">34,1%</span></div>
             <div class="ph-row"><div><div class="nm">Despesas</div><div class="sub">fixas + taxas</div></div><span class="tag tag-warn">R$189k</span></div>
           </div>
-          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it on"></div></div>
+          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it on"></div><div class="it"></div><div class="it"></div></div>
+        </div></div>
+      </div>
+      <div class="car-slide">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar" style="background:linear-gradient(160deg,#dc2626 0%,#991b1b 100%)"><div class="ttl">MODO LIVE · TIKTOK SHOP</div><div class="val">🔴 Ao vivo · 41 min</div></div>
+          <div class="ph-kpis">
+            <div class="ph-kpi"><div class="l">Vendido na live</div><div class="v">R$2.340</div><div class="bar" style="background:#dc2626"></div></div>
+            <div class="ph-kpi"><div class="l">Pedidos</div><div class="v">18</div><div class="bar" style="background:var(--green)"></div></div>
+          </div>
+          <div class="ph-list" style="margin:2px 12px 10px">
+            <div class="ph-row"><div><div class="nm">Kit Organizador</div><div class="sub">Combo sugerido pela IA</div></div><span class="tag tag-ok">R$89</span></div>
+            <div class="ph-row"><div><div class="nm">Luminária LED</div><div class="sub">3 vendidos agora</div></div><span class="tag tag-warn">Últimas 3</span></div>
+            <div class="ph-row"><div><div class="nm">Mochila Urbana</div><div class="sub">Bipada por código de barras</div></div><span class="tag tag-ok">Estoque 22</span></div>
+          </div>
+          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it on"></div><div class="it"></div></div>
+        </div></div>
+      </div>
+      <div class="car-slide">
+        <div class="phone"><div class="phone-screen">
+          <div class="ph-topbar" style="background:linear-gradient(160deg,#7c3aed 0%,#5b21b6 100%)"><div class="ttl">ASSISTENTE IA</div><div class="val">✨ Pergunte algo</div></div>
+          <div class="ph-list" style="margin:14px 12px">
+            <div class="ph-row" style="display:block;padding:9px 0"><div class="sub" style="margin-bottom:3px">Você perguntou</div><div class="nm" style="white-space:normal;font-weight:600">"Quais produtos estão parados?"</div></div>
+            <div class="ph-row" style="display:block;padding:9px 0;border-bottom:none"><div class="sub" style="margin-bottom:3px">Nexus360 IA</div><div class="nm" style="white-space:normal;font-weight:500;font-size:11.5px;line-height:1.5">8 produtos sem giro há 20+ dias. Sugiro promoção em 3 deles com margem acima de 40%.</div></div>
+          </div>
+          <div class="ph-nav"><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it"></div><div class="it on"></div></div>
         </div></div>
       </div>
     </div>
@@ -800,13 +825,15 @@ if(stage && heroPhone){
 (function(){
   const slides=document.querySelectorAll('#carStage .car-slide');
   if(!slides.length) return;
-  const titles=['Dashboard','Produtos','Vendas','Clientes · RFM','DRE'];
+  const titles=['Dashboard','Produtos','Vendas','Clientes · RFM','DRE','Modo Live','Assistente IA'];
   const descs=[
     'KPIs e gráficos consolidados: receita, pedidos, ticket médio e produtos em alta.',
     'Status de estoque por SKU, com alertas de crítico e ruptura em tempo real.',
     'Vendas por canal e cliente, com filtros por período e marketplace.',
     'Segmentação de clientes por Recência, Frequência e Valor — pronta para campanhas.',
-    'Receita menos custo, taxas e impostos — o lucro real, não só o faturamento.'
+    'Receita menos custo, taxas e impostos — o lucro real, não só o faturamento.',
+    'Tela pra transmitir ao vivo no TikTok Shop: o que empurrar, combo sugerido pela IA e bipar SKU na hora.',
+    'Pergunte em português e receba análises, plano de compra e frases de venda geradas na hora.'
   ];
   const tabsEl=document.getElementById('carTabs'), countEl=document.getElementById('carCount');
   const titleEl=document.getElementById('carTitle'), descEl=document.getElementById('carDesc');
