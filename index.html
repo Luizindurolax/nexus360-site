@@ -143,6 +143,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .chip2{bottom:18%;right:-10%;animation-delay:1.5s}
 @keyframes chipfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 
+/* Prints sem moldura de celular: só a tela, com cantos e sombra próprios */
+.phone-stage .phone,
+.car-slide .phone{
+  background:none;padding:0;box-shadow:none;transform:none;border-radius:20px;
+}
+.phone-stage .phone::before,
+.car-slide .phone::before{content:none}
+.phone-stage .phone-screen,
+.car-slide .phone-screen{
+  border-radius:20px;
+  box-shadow:0 30px 60px -20px rgba(15,23,42,.35),0 10px 26px rgba(15,23,42,.14);
+  border:1px solid rgba(15,23,42,.06);
+}
+
 /* ---------- SECTION HEAD ---------- */
 .sec-head{text-align:center;max-width:640px;margin:0 auto 46px}
 .sec-tag{color:var(--blue);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
@@ -805,21 +819,6 @@ function attachTilt(el,intensity){
 }
 document.querySelectorAll('.tilt').forEach(el=>attachTilt(el,9));
 document.querySelectorAll('.tilt-soft').forEach(el=>attachTilt(el,14));
-
-// 3D tilt for hero phone, following mouse across whole stage
-const stage=document.getElementById('phoneStage');
-const heroPhone=document.getElementById('heroPhone');
-if(stage && heroPhone){
-  stage.addEventListener('mousemove',e=>{
-    const r=stage.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-0.5;
-    const y=(e.clientY-r.top)/r.height-0.5;
-    heroPhone.style.transform=`rotateY(${-16 + x*22}deg) rotateX(${6 - y*16}deg) rotateZ(1deg)`;
-  });
-  stage.addEventListener('mouseleave',()=>{
-    heroPhone.style.transform='rotateY(-16deg) rotateX(6deg) rotateZ(1deg)';
-  });
-}
 
 // carrossel de telas do app (showcase2)
 (function(){
