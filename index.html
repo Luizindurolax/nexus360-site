@@ -8,6 +8,7 @@
 <meta name="description" content="Dashboard e métricas para o Bling: vendas, estoque, Curva ABC, DRE, margem real e previsão de ruptura. Integra ao Bling e aos marketplaces (Mercado Livre, Shopee, Amazon, TikTok Shop). Teste grátis 7 dias.">
 <meta name="keywords" content="dashboard bling, métricas bling, relatórios bling, app para bling, curva ABC bling, DRE ecommerce, dashboard mercado livre, gestão de estoque bling, Nexus360">
 <link rel="canonical" href="https://store.nexus360saas.com.br/">
+<link rel="icon" type="image/svg+xml" href="/logo-nexus360.svg">
 <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" href="/icon-192.png">
@@ -145,13 +146,16 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 /* Prints sem moldura de celular: só a tela, com cantos e sombra próprios */
 .phone-stage .phone,
-.car-slide .phone{
+.car-slide .phone,
+#ldStage .phone{
   background:none;padding:0;box-shadow:none;transform:none;border-radius:20px;
 }
 .phone-stage .phone::before,
-.car-slide .phone::before{content:none}
+.car-slide .phone::before,
+#ldStage .phone::before{content:none}
 .phone-stage .phone-screen,
-.car-slide .phone-screen{
+.car-slide .phone-screen,
+#ldStage .phone-screen{
   border-radius:20px;
   box-shadow:0 30px 60px -20px rgba(15,23,42,.35),0 10px 26px rgba(15,23,42,.14);
   border:1px solid rgba(15,23,42,.06);
@@ -248,6 +252,29 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .how-num{width:68px;height:68px;border-radius:20px;background:linear-gradient(150deg,#fff,#eef2ff);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;color:var(--blue);margin:0 auto 18px;box-shadow:0 14px 26px -12px rgba(26,86,219,.3),inset 0 1px 1px rgba(255,255,255,.8)}
 .how-card h3{font-size:16.5px;font-weight:700;margin-bottom:8px}
 .how-card p{font-size:13.8px;color:var(--t2);max-width:260px;margin:0 auto}
+
+/* ---------- ARQUITETURA (diagrama do fluxo de dados) ---------- */
+.arch{padding:20px 24px 100px}
+.arch-box{max-width:980px;margin:0 auto;background:var(--card);border:1px solid var(--bdr);border-radius:22px;padding:50px 40px 42px;box-shadow:0 2px 10px rgba(15,23,42,.04)}
+.arch-row{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
+.arch-node{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:16px 22px;display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;box-shadow:0 6px 16px rgba(15,23,42,.06);white-space:nowrap}
+.arch-node .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.arch-node.bling{color:#059669}
+.arch-node.nexus{color:var(--blue2)}
+.arch-node.supa{color:#1e293b}
+.arch-arrow{width:56px;height:18px;color:var(--bdr);flex-shrink:0}
+.arch-connector{max-width:640px;margin:0 auto;position:relative;height:40px}
+.arch-connector svg{width:100%;height:100%;color:var(--bdr);overflow:visible}
+.arch-outputs{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+.arch-out{background:var(--bg);border:1px solid var(--bdr);border-radius:14px;padding:18px 20px;text-align:center;width:170px}
+.arch-out .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;color:#fff}
+.arch-out .ic svg{width:18px;height:18px}
+.arch-out .lbl{font-weight:700;font-size:13.5px}
+@media(max-width:760px){
+  .arch-row{flex-direction:column;gap:14px}
+  .arch-arrow{transform:rotate(90deg)}
+  .arch-box{padding:36px 20px 30px}
+}
 
 /* ---------- PRICING ---------- */
 .pricing{padding:20px 24px 100px}
@@ -355,6 +382,9 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
       <p class="lead">O Nexus360 conecta ao seu ERP, organiza os dados no Supabase e entrega um dashboard rápido, instalável no celular como app — pronto para tomar decisão em segundos, não em planilhas.</p>
       <div class="hero-actions">
         <a href="#cta" class="btn btn-primary btn-lg">Solicitar demonstração</a>
+        <button type="button" class="btn btn-ghost btn-lg" onclick="openLiveDemo()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="vertical-align:-2px;margin-right:5px"><path d="M8 5v14l11-7z"/></svg>Ver o app ao vivo
+        </button>
         <a href="#recursos" class="btn btn-ghost btn-lg">Ver recursos ↓</a>
       </div>
       <div class="badges-row">
@@ -364,7 +394,7 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
       </div>
     </div>
     <div class="phone-stage" id="phoneStage">
-      <div class="phone" id="heroPhone">
+      <div class="phone" id="heroPhone" onclick="openLiveDemo()" style="cursor:pointer" title="Clique e veja o app ao vivo">
         <div class="phone-screen">
           <div class="ph-topbar">
             <div class="ttl">RECEITA TOTAL · HOJE</div>
@@ -656,6 +686,40 @@ footer{padding:50px 24px 30px;border-top:1px solid var(--bdr);background:#fff}
   </div>
 </section>
 
+<section class="arch" id="arquitetura">
+  <div class="sec-head">
+    <div class="sec-tag">Por dentro</div>
+    <h2>Conheça como funciona a solução</h2>
+    <p>Do seu Bling até o dashboard na tela, sem planilha no meio do caminho.</p>
+  </div>
+  <div class="arch-box">
+    <div class="arch-row">
+      <div class="arch-node bling"><span class="dot" style="background:#059669"></span>Bling</div>
+      <svg class="arch-arrow" viewBox="0 0 56 18" fill="none"><path d="M2 9h46M40 3l8 6-8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="arch-node nexus"><span class="dot" style="background:var(--blue)"></span>Nexus360</div>
+      <svg class="arch-arrow" viewBox="0 0 56 18" fill="none"><path d="M2 9h46M40 3l8 6-8 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="arch-node supa"><span class="dot" style="background:#10b981"></span>Supabase</div>
+    </div>
+    <div class="arch-connector">
+      <svg viewBox="0 0 640 40" preserveAspectRatio="none"><path d="M320 0v14M320 14H85v14M320 14h235v14M85 28v6M320 28v6M555 28v6" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+    </div>
+    <div class="arch-outputs">
+      <div class="arch-out">
+        <div class="ic" style="background:linear-gradient(150deg,#4d84ff,var(--blue))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 15l4-4 3 3 5-6"/></svg></div>
+        <div class="lbl">Dashboard Web</div>
+      </div>
+      <div class="arch-out">
+        <div class="ic" style="background:linear-gradient(150deg,#34d399,var(--green))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <div class="lbl">App no celular</div>
+      </div>
+      <div class="arch-out">
+        <div class="ic" style="background:linear-gradient(150deg,#a78bfa,var(--purple))"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V8a5 5 0 0 0-5-5z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        <div class="lbl">Alertas & IA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="pricing" id="planos">
   <div class="sec-head">
     <div class="sec-tag">Planos</div>
@@ -820,20 +884,24 @@ function attachTilt(el,intensity){
 document.querySelectorAll('.tilt').forEach(el=>attachTilt(el,9));
 document.querySelectorAll('.tilt-soft').forEach(el=>attachTilt(el,14));
 
+// Títulos/descrições das telas do app — reaproveitados pelo carrossel (showcase2)
+// e pelo modal "Ver o app ao vivo" (liveDemoOverlay), que clona o mesmo HTML.
+const APP_SCREEN_TITLES=['Dashboard','Produtos','Vendas','Clientes · RFM','DRE','Modo Live','Assistente IA'];
+const APP_SCREEN_DESCS=[
+  'KPIs e gráficos consolidados: receita, pedidos, ticket médio e produtos em alta.',
+  'Status de estoque por SKU, com alertas de crítico e ruptura em tempo real.',
+  'Vendas por canal e cliente, com filtros por período e marketplace.',
+  'Segmentação de clientes por Recência, Frequência e Valor — pronta para campanhas.',
+  'Receita menos custo, taxas e impostos — o lucro real, não só o faturamento.',
+  'Tela pra transmitir ao vivo no TikTok Shop: o que empurrar, combo sugerido pela IA e bipar SKU na hora.',
+  'Pergunte em português e receba análises, plano de compra e frases de venda geradas na hora.'
+];
+
 // carrossel de telas do app (showcase2)
 (function(){
   const slides=document.querySelectorAll('#carStage .car-slide');
   if(!slides.length) return;
-  const titles=['Dashboard','Produtos','Vendas','Clientes · RFM','DRE','Modo Live','Assistente IA'];
-  const descs=[
-    'KPIs e gráficos consolidados: receita, pedidos, ticket médio e produtos em alta.',
-    'Status de estoque por SKU, com alertas de crítico e ruptura em tempo real.',
-    'Vendas por canal e cliente, com filtros por período e marketplace.',
-    'Segmentação de clientes por Recência, Frequência e Valor — pronta para campanhas.',
-    'Receita menos custo, taxas e impostos — o lucro real, não só o faturamento.',
-    'Tela pra transmitir ao vivo no TikTok Shop: o que empurrar, combo sugerido pela IA e bipar SKU na hora.',
-    'Pergunte em português e receba análises, plano de compra e frases de venda geradas na hora.'
-  ];
+  const titles=APP_SCREEN_TITLES, descs=APP_SCREEN_DESCS;
   const tabsEl=document.getElementById('carTabs'), countEl=document.getElementById('carCount');
   const titleEl=document.getElementById('carTitle'), descEl=document.getElementById('carDesc');
   let cur=0;
@@ -851,6 +919,49 @@ document.querySelectorAll('.tilt-soft').forEach(el=>attachTilt(el,14));
   let auto=setInterval(()=>go(cur+1),6000);
   document.getElementById('carStage').addEventListener('mouseenter',()=>clearInterval(auto));
 })();
+
+// Modal "Ver o app ao vivo" — amplia as mesmas telas de exemplo do carrossel,
+// clonando o HTML de #carStage (uma cópia por abertura) pra não duplicar markup.
+let ldIdx=0;
+function openLiveDemo(){
+  const overlay=document.getElementById('liveDemoOverlay');
+  const stage=document.getElementById('ldStage');
+  const source=document.querySelectorAll('#carStage .car-slide .phone');
+  if(source.length && !stage.childElementCount){
+    source.forEach(p=>{
+      const clone=p.cloneNode(true);
+      clone.style.display='none';
+      stage.appendChild(clone);
+    });
+  }
+  document.getElementById('ldDots').innerHTML=APP_SCREEN_TITLES.map((_,i)=>`<i data-i="${i}"></i>`).join('');
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  ldGo(0);
+}
+function closeLiveDemo(){
+  document.getElementById('liveDemoOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function ldGo(i){
+  const phones=document.querySelectorAll('#ldStage .phone');
+  if(!phones.length)return;
+  ldIdx=(i+phones.length)%phones.length;
+  phones.forEach((p,k)=>p.style.display=k===ldIdx?'':'none');
+  document.querySelectorAll('#ldDots i').forEach((d,k)=>d.classList.toggle('on',k===ldIdx));
+  document.getElementById('ldCount').textContent='Tela '+String(ldIdx+1).padStart(2,'0')+' / '+String(phones.length).padStart(2,'0');
+  document.getElementById('ldTitle').textContent=APP_SCREEN_TITLES[ldIdx];
+  document.getElementById('ldDesc').textContent=APP_SCREEN_DESCS[ldIdx];
+}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('liveDemoOverlay').classList.contains('open'))return;
+  if(e.key==='Escape')closeLiveDemo();
+  if(e.key==='ArrowRight')ldGo(ldIdx+1);
+  if(e.key==='ArrowLeft')ldGo(ldIdx-1);
+});
+document.getElementById('ldDots').addEventListener('click',e=>{
+  const d=e.target.closest('i'); if(d)ldGo(+d.dataset.i);
+});
 
 // parallax blobs following scroll slightly
 window.addEventListener('scroll',()=>{
@@ -892,7 +1003,46 @@ window.addEventListener('scroll',()=>{
 .chat-foot button{background:var(--blue);border:none;color:#fff;border-radius:11px;width:40px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .chat-foot button:disabled{opacity:.5;cursor:default}
 @media(max-width:480px){.chat-panel{right:16px;bottom:88px}.chat-fab{right:16px;bottom:16px}}
+.live-demo-overlay{display:none;position:fixed;inset:0;background:rgba(10,14,26,.72);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:24px}
+.live-demo-overlay.open{display:flex}
+.live-demo-box{background:#fff;border-radius:24px;padding:26px 26px 20px;max-width:380px;width:100%;box-shadow:0 40px 90px -20px rgba(0,0,0,.5);position:relative;max-height:92vh;overflow:auto;text-align:center}
+.live-demo-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;border:none;background:var(--bg);color:var(--text);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.live-demo-close:hover{background:var(--bdr)}
+.live-demo-tag{color:var(--blue);font-weight:700;font-size:11.5px;letter-spacing:.6px;text-transform:uppercase}
+.live-demo-head h3{font-size:19px;font-weight:800;margin:5px 0 6px}
+.live-demo-head p{color:var(--t2);font-size:13.3px;margin:0 0 18px;min-height:34px}
+.live-demo-stage{display:flex;justify-content:center;margin-bottom:16px}
+.live-demo-stage .phone{width:250px;height:512px}
+.live-demo-nav{display:flex;align-items:center;justify-content:center;gap:16px}
+.ld-nav-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--bdr);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);flex-shrink:0}
+.ld-nav-btn:hover{background:var(--bg)}
+.ld-nav-btn svg{width:16px;height:16px}
+.live-demo-dots{display:flex;gap:6px;align-items:center}
+.live-demo-dots i{width:6px;height:6px;border-radius:50%;background:var(--bdr);display:block;transition:all .2s}
+.live-demo-dots i.on{background:var(--blue);width:18px;border-radius:4px}
+.live-demo-cta{margin-top:16px;padding-top:16px;border-top:1px solid var(--bdr)}
+.live-demo-cta a{color:var(--blue);font-weight:700;font-size:13.5px;text-decoration:none}
+.live-demo-cta a:hover{text-decoration:underline}
+@media(max-width:420px){.live-demo-stage .phone{width:210px;height:430px}}
 </style>
+
+<div class="live-demo-overlay" id="liveDemoOverlay" onclick="if(event.target===this)closeLiveDemo()">
+  <div class="live-demo-box">
+    <button class="live-demo-close" onclick="closeLiveDemo()" aria-label="Fechar">✕</button>
+    <div class="live-demo-head">
+      <div class="live-demo-tag" id="ldCount">Tela 01 / 07</div>
+      <h3 id="ldTitle">Dashboard</h3>
+      <p id="ldDesc"></p>
+    </div>
+    <div class="live-demo-stage" id="ldStage"></div>
+    <div class="live-demo-nav">
+      <button class="ld-nav-btn" onclick="ldGo(ldIdx-1)" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="live-demo-dots" id="ldDots"></div>
+      <button class="ld-nav-btn" onclick="ldGo(ldIdx+1)" aria-label="Próxima"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="live-demo-cta"><a href="#cta" onclick="closeLiveDemo()">Testar grátis por 7 dias →</a></div>
+  </div>
+</div>
 
 <button class="chat-fab" id="chatFab" aria-label="Abrir assistente virtual">
   <span class="dot"></span>
